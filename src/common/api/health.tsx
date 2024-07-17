@@ -1,6 +1,7 @@
+export const fetchAPIPath = `/api/api`;
+
 export async function generic_get_request(route: string) {
-   console.log(route);
-   const response = await fetch(`http://localhost:9000/health`, {
+   const response = await fetch(`${fetchAPIPath}${route}`, {
       method: 'GET',
       headers: {
          'Content-Type': 'application/json',
@@ -8,7 +9,8 @@ export async function generic_get_request(route: string) {
       credentials: 'include',
    });
 
-   console.log(response);
+  console.log(`Requesting: ${fetchAPIPath}${route}`);
+  console.log(response);
 
    return response;
 }
