@@ -1,0 +1,178 @@
+@import url('../../../common/assets/css/colors.css');
+@import url('../../../common/assets/css/inputField.css');
+
+.main_div {
+    background: var(--body_color);
+    height: 100vh;
+}
+
+.main_page_left_div {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.sign_in_div,
+.forgot_password_div {
+    display: flex;
+    border-radius: 10px;
+    margin-top: 5rem;
+    align-items: center;
+    flex-direction: column;
+}
+
+.connexion_text {
+    text-align: start;
+    font-family: 'Gilroy-Bold';
+    font-size: 28px;
+    line-height: 34px;
+}
+
+.sign_in_form_div {
+    margin-top: 2rem;
+    font-family: 'Gilroy-Bold';
+    width: 100%;
+}
+
+.login_label {
+    display: flex;
+    font-style: normal;
+    text-align: start;
+}
+
+.asterix_img {
+    margin-left: 6px;
+    margin-top: 4px;
+    height: 6px;
+    width: 6px;
+    background: url(../images/asterix.png);
+}
+
+.cta_connection_div {
+    margin-top: 2.8rem;
+    width: 100%;
+}
+
+.login_error_connection_div {
+    width: 46%;
+    text-align: center;
+}
+
+.login_error_span {
+    color: var(--red_button);
+    font-family: 'Gilroy-Bold';
+    font-size: large;
+}
+
+.generic_link_div {
+    margin-top: 1.5rem;
+    width: 100%;
+    text-align: center;
+}
+
+.generic_link {
+    font-size: 20px;
+    color: var(--link_main_color);
+    text-decoration: none;
+    position: relative;
+    font-family: 'Gilroy-Bold';
+    font-style: normal;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.error_shake {
+    position: relative;
+    animation: shake 0.1s linear;
+    animation-iteration-count: 3;
+}
+
+@keyframes shake {
+    0% {
+        left: -5px;
+    }
+
+    100% {
+        right: -5px;
+    }
+}
+
+.retour_btn {
+    font-family: 'Gilroy-Bold';
+    font-size: 12px;
+    outline: none;
+    border: 1px solid var(--border_color);
+    border-radius: 10px;
+    width: 80px;
+    height: 35px;
+}
+
+.verify_code_btn {
+    border: 1px solid var(--link_main_color);
+    background-color: var(--link_main_color);
+    color: var(--border_color);
+    width: 45px;
+    height: 60px;
+    border-radius: 10px;
+    transition: transform 80ms ease-in;
+    transition: background 0.4s;
+}
+
+.sign_up_prenom_div,
+.sign_up_dateofbirth_div {
+    margin-right: 0.5rem;
+}
+
+.sign_up_nom_div {
+    margin-left: 0.5rem;
+}
+
+.sign_up_email_pass_div {
+    margin-top: 2rem;
+    font-family: 'Gilroy-Bold';
+    width: 100%;
+}
+
+.new_user_account_creation_error {
+    color: var(--red_button);
+    font-family: 'Gilroy-Bold';
+    font-size: large;
+    text-align: center;
+}
+
+.generic_btn_no_background{
+        font-family: 'Gilroy-Bold';
+            cursor: pointer;
+            width: 100%;
+            outline: none;
+            line-height: 17px;
+            text-align: center;
+            border-radius: 12px;
+            border: 1px solid var(--body_color);
+            background-color: var(--body_color);
+            color: var(--link_main_color);
+            letter-spacing: 1px;
+            height: 3rem;
+            transition: transform 80ms ease-in;
+            transition: background 0.4s;
+            font-style: normal;
+            font-size: 16px;
+}
+
+.generic_btn {
+    font-family: 'Gilroy-Bold';
+    cursor: pointer;
+    width: 100%;
+    outline: none;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    border-radius: 12px;
+    border: 1px solid var(--link_main_color);
+    background-color: var(--link_main_color);
+    color: var(--border_color);
+    letter-spacing: 1px;
+    height: 4rem;
+    transition: transform 80ms ease-in;
+    transition: background 0.4s;
+}

@@ -1,3 +1,5 @@
+import { UserSignUp } from "../../components/templates/signIn";
+
 export const fetchAPIPath = `/api/api`;
 
 export async function generic_get_request(route: string) {
@@ -8,9 +10,6 @@ export async function generic_get_request(route: string) {
       },
       credentials: 'include',
    });
-
-  console.log(`Requesting: ${fetchAPIPath}${route}`);
-  console.log(response);
 
    return response;
 }
@@ -33,4 +32,26 @@ export const fetchHealth = async (): Promise<ResponseSchema<Health>> => {
    } else {
       throw new Error('Unauthorized');
    }
+};
+
+
+export async function generic_post(body: any, route: string, method: string) {
+
+   console.log(JSON.stringify(body));
+   const response = await fetch(`${fetchAPIPath}${route}`, {
+      method: method,
+      headers: {
+         'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify(body),
+   });
+
+   return response;
+}
+
+
+
+export const sign_up = async (body: UserSignUp): Promise<Response> => {
+   return await generic_post(body, `/users/create-user`, 'POST');
 };

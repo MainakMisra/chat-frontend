@@ -18,6 +18,7 @@ const HealthRoute = () => {
 
    useEffect(() => {
       if (isSuccess) {
+         console.log(data.data);
          // if (data.data === undefined) {
          //    clear_cookies();
          //    localStorage.clear();
