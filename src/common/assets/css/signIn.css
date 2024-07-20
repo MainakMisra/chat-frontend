@@ -53,8 +53,9 @@
     width: 100%;
 }
 
+
 .login_error_connection_div {
-    width: 46%;
+    width: 100%;
     text-align: center;
 }
 
@@ -68,6 +69,12 @@
     margin-top: 1.5rem;
     width: 100%;
     text-align: center;
+}
+
+.generic_link_right_div{
+        margin-top: 1.5rem;
+            width: 100%;
+            text-align: right;
 }
 
 .generic_link {
@@ -176,3 +183,36 @@
     transition: transform 80ms ease-in;
     transition: background 0.4s;
 }
+
+.auth_input_container_div{
+    width: 400px;
+}
+
+
+
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.navbar {
+    height: 60px;
+    position: relative;
+    border-bottom: 1px solid var(--input_placeholder);
+}
+
+.nav-elements ul {
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+}
+
+.nav-elements ul li:not(:last-child) {
+    margin-right: 60px;
+}
+

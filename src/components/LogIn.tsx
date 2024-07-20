@@ -2,12 +2,13 @@ import { useNavigate } from 'react-router';
 import '../common/assets/css/signIn.css';
 import React, { useEffect, useState } from 'react';
 import { input_is_empty } from './utils/helperFunctions.tsx';
-import { UserSignIn } from './templates/signIn';
+import { UserLogIn } from './templates/user.tsx';
+import { sign_in } from '../common/api/user.tsx';
 
-export const SignIn = () => {
+export const LogIn = () => {
    const navigate = useNavigate();
 
-   const [LoginData, SetLoginData] = useState<UserSignIn>({
+   const [LoginData, SetLoginData] = useState<UserLogIn>({
       email: '',
       password: '',
    });
@@ -28,38 +29,17 @@ export const SignIn = () => {
            
            console.log(LoginData);
 
-        //  sign_in(LoginData).then((response) => {
-
-        //     if (response.status === 200) {
-        //        response
-        //           .json()
-        //           .then((data) => {
-
-        //             //  if (
-        //             //     data.data.permission === 'hr' ||
-        //             //     data.data.permission === 'manager' ||
-        //             //     data.data.permission === 'admin'
-        //             //  ) {
-        //             //     navigate('/select-role');
-        //             //  } else if (
-        //             //     data.data.has_employee_form === true &&
-        //             //     data.data.permission === 'emp'
-        //             //  ) {
-        //             //     navigate('/home/dashboard');
-        //             //  } else {
-        //             //     navigate('/onboarding/personal-information');
-        //             //  }
-        //           })
-        //           .catch((error) => {
-        //              console.error(error);
-        //           });
-        //     }  else if (response.status === 401 || response.status === 404) {
-        //        login_error_span.innerHTML =
-        //           "nom d'utilisateur ou mot de passe incorrect";
-        //     } else {
-        //        console.error(response);
-        //     }
-        //  });
+         sign_in(LoginData).then((response) => {
+            if (response.status === 200) {
+               navigate('/chat');
+               
+            }  else if (response.status === 401 || response.status === 404) {
+               login_error_span.innerHTML =
+                  "nom d'utilisateur ou mot de passe incorrect";
+            } else {
+               console.error(response);
+            }
+         });
       }
    };
 
@@ -134,18 +114,23 @@ export const SignIn = () => {
                      >
                         Mot de passe oublié ?
                      </a>
-                       </div>
-                       <div className='cta_connection_div'>
-                            <label htmlFor='user_password' className='login_label'>
-                               vous n'avez pas de compte ?
-                               <button
-                               className='generic_btn_no_background'
-                               onClick={() => navigate('/signup')}
-                                >
-                                Créer un compte
-                                </button>
-                            </label>
-                       </div>
+                  </div>
+                  
+                  <div className='cta_connection_div'>
+                     <label className='login_label'>
+                     vous n'avez pas de compte ?
+                        <div className='generic_link_right_div'>
+                           <a
+                           className='generic_link'
+                           onClick={() => navigate('/signup')}
+                           href='/signup'
+                           >
+                           Créer un compte
+                           </a>
+                        </div>
+                     </label>
+                  </div>
+
                </div>
             </div>
          </div>

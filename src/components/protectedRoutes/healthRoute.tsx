@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 // import { clear_cookies } from 'components/utils/helperFunctions';
 
-import { fetchHealth } from '../../common/api/health.tsx';
 import { Outlet } from 'react-router';
 import React from 'react';
 import { useQuery } from 'react-query';
+import { fetchHealth } from '../../common/api/user';
 
 const HealthRoute = () => {
    const { data, isSuccess, isError } = useQuery(

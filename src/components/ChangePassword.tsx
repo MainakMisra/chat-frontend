@@ -2,44 +2,36 @@ import { useNavigate } from 'react-router';
 import '../common/assets/css/signIn.css';
 import React, { useState } from 'react';
 import { input_is_empty } from './utils/helperFunctions.tsx';
-import { UserSignUp } from './templates/user.tsx';
-import { sign_up } from '../common/api/user.tsx';
+import { ForgetPassword } from './templates/user.tsx';
+import { change_password } from '../common/api/user.tsx';
 
-export const SignUp = () => {
+export const ChangePassword = () => {
    const navigate = useNavigate();
 
-   const [SignUpData, SetSignUpData] = useState<UserSignUp>({
-        email: '',
-        password: '',
-        first_name: '',
-        last_name: '',
+   const [ChangePasswordData, SetChangePasswordData] = useState<ForgetPassword>({
+      email: '',
+      password: '',
    });
    const UpdateFormData = (event: React.ChangeEvent<HTMLInputElement>) => {
-      SetSignUpData({ ...SignUpData, [event.target.name]: event.target.value });
+      SetChangePasswordData({ ...ChangePasswordData, [event.target.name]: event.target.value });
    };
 
-   const user_create_account = (): any => {
+   const user_log_in = (): any => {
       var login_error_span = document.getElementById(
          'login_error_span'
       ) as HTMLDivElement;
 
-        var user_email_res = input_is_empty('user_email');
-        var user_password_res = input_is_empty('user_password');
-        var user_first_name_res = input_is_empty('user_first_name');
-        var user_last_name_res = input_is_empty('user_last_name');
+      var user_email_res = input_is_empty('user_email');
+      var user_password_res = input_is_empty('user_password');
 
-       if (!user_email_res &&
-           !user_password_res &&
-           !user_first_name_res &&
-          !user_last_name_res) {
+       if (user_email_res === false && user_password_res === false) {
           
-         sign_up(SignUpData).then((response) => {
-
-            if (response.status === 201) {
+         change_password(ChangePasswordData).then((response) => {
+            if (response.status === 200) {
                navigate('/');
-            }  else if (response.status === 409) {
+            }  else if (response.status === 404) {
                login_error_span.innerHTML =
-                  "Impossible de créer un compte avec cet email";
+                  "vous n'avez pas de compte avec cette email";
             } else {
                console.error(response);
             }
@@ -47,45 +39,12 @@ export const SignUp = () => {
       }
    };
 
-
    return (
       <div className='main_div'>
          <div className='main_page_left_div'>
             <div id='sign_in_div' className='sign_in_div'>
-               <p className='connexion_text'>Créez votre compte !</p>
-                   <div className='auth_input_container_div'>
-                                         <div className='sign_in_form_div'>
-                     <label htmlFor='user_first_name' className='login_label'>
-                        Prenom
-                        <div className='asterix_img'></div>
-                     </label>
-                                <input
-                                id='user_first_name'
-                                maxLength={100}
-                               placeholder='Votre prenom'
-                               className={`generic_input_type`}
-                                type={'text'}
-                                name={'first_name'}
-                                required={true}
-                                onChange={UpdateFormData}
-                            />
-                       </div>
-                                         <div className='sign_in_form_div'>
-                     <label htmlFor='user_last_name' className='login_label'>
-                        Nom
-                        <div className='asterix_img'></div>
-                     </label>
-                                <input
-                                id='user_last_name'
-                                maxLength={100}
-                               placeholder='Votre nom'
-                               className={`generic_input_type`}
-                                type={'text'}
-                                name={'last_name'}
-                                required={true}
-                                onChange={UpdateFormData}
-                            />
-                  </div>
+               <p className='connexion_text'>Mot de passe oublié</p>
+               <div className='auth_input_container_div'>
                   <div className='sign_in_form_div'>
                      <label htmlFor='user_email' className='login_label'>
                         Adresse email
@@ -104,13 +63,13 @@ export const SignUp = () => {
                   </div>
                   <div className='sign_in_form_div'>
                      <label htmlFor='user_password' className='login_label'>
-                        Mot de passe
+                        nouveau mot de passe
                         <div className='asterix_img'></div>
                      </label>
                                   <input
                                 id='user_password'
                                 maxLength={50}
-                                placeholder='Votre mot de passe'
+                                placeholder='nouveau mot de passe'
                                 type={'password'}
                                name={'password'}
                                className={`generic_input_type`}
@@ -120,10 +79,10 @@ export const SignUp = () => {
                   </div>
                   <div className='cta_connection_div'>
                      <button
-                        onClick={user_create_account}
+                        onClick={user_log_in}
                         className='generic_btn'
                      >
-                        Créer un compte
+                        Mise à jour
                      </button>
                   </div>
                   <div className='login_error_connection_div'>
@@ -133,7 +92,8 @@ export const SignUp = () => {
                      ></span>
                   </div>
 
-                                    <div className='cta_connection_div'>
+
+                  <div className='cta_connection_div'>
                      <label className='login_label'>
                   Avez-vous déjà un compte ?
                         <div className='generic_link_right_div'>
