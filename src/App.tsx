@@ -2,7 +2,6 @@
 import React from 'react';
 import { queryClient } from './common/configuration/ReactQueryConfiguration.tsx';
 import { Route, Routes } from 'react-router';
-import HealthRoute from './components/protectedRoutes/healthRoute.tsx';
 import { QueryClientProvider } from 'react-query';
 import { SignUp } from './components/SignUp.tsx';
 import { LogIn } from './components/LogIn.tsx';

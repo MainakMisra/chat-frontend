@@ -21,3 +21,9 @@ export interface User {
    last_name: string;
    email: string;
 }
+
+export interface Message extends User {
+   message_id: number;
+   content: string;
+   created_at: string;
+}

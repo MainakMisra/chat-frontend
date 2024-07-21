@@ -2,23 +2,6 @@ import { ForgetPassword, User, UserLogIn, UserSignUp } from "../../components/te
 import { generic_get, generic_post, ResponseSchema } from "./requests.tsx";
 
 
-// todo: to remove this
-export interface Health {
-   data: number;
-}
-
-
-export const fetchHealth = async (): Promise<ResponseSchema<Health>> => {
-  
-   const fetch_user_resp = await generic_get('/health');
-
-   if (fetch_user_resp.status === 200) {
-      return fetch_user_resp.json();
-   } else {
-      throw new Error('Unauthorized');
-   }
-};
-
 export const sign_in = async (body: UserLogIn): Promise<Response> => {
    return await generic_post(body, `/auth/login`, 'POST');
 };

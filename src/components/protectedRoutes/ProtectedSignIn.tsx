@@ -28,7 +28,8 @@ const ProtectedSignIn = () => {
     const [user, setUser] = useState<User | null>(null);
 
    useEffect(() => {
-       if (isSuccess) {
+      if (isSuccess) {
+         console.log(data.data);
          if (data.data === undefined) {
             SetIsMeSuccess(false);
             navigate('/');
@@ -55,12 +56,3 @@ const ProtectedSignIn = () => {
     
 };
 export default ProtectedSignIn;
-
-
-// export const useUser = (): UserContextType => {
-//   const context = useContext(UserContext);
-//   if (!context) {
-//     throw new Error('useUser must be used within a ProtectedSignIn');
-//   }
-//   return context;
-// };
