@@ -43,15 +43,6 @@ export const LogIn = () => {
       }
    };
 
-//    useEffect(() => {
-//       /*Redirect if user is already logged in*/
-//       if (localStorage.getItem('user_post') === 'hr') {
-//          navigate('/dashboard');
-//       } else if (localStorage.getItem('user_post') === 'emp') {
-//          navigate('/home/dashboard');
-//       }
-//    }, [navigate]);
-
    return (
       <div className='main_div'>
          <div className='main_page_left_div'>

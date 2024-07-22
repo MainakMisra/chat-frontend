@@ -25,25 +25,16 @@ export const clear_cookies = () => {
    }
 };
 
-export const show_or_hide_filter_bar_drop_down = (id: string) => {
-   (document.getElementById(id) as HTMLElement).classList.toggle(
-      'filter_bar_drop_down_show'
-   );
-};
+export const formatDateTime = (isoString: string): { date: string, time: string } => {
+  const date = new Date(isoString);
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+  const year = date.getFullYear();
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
 
-export const show_sub_string_with_dots = (
-   value: string,
-   string_len_to_show: number = 20
-) => {
-   return value.length > string_len_to_show
-      ? value.substring(0, string_len_to_show) + '...'
-      : value;
-};
-
-export const capitalize_first_letter = (value: string): string => {
-   if (value !== null) {
-      return value.charAt(0).toUpperCase() + value.slice(1);
-   } else {
-      return '';
-   }
+  return {
+    date: `${day}/${month}/${year}`,
+    time: `${hours}:${minutes}`
+  };
 };

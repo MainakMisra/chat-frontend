@@ -1,10 +1,15 @@
 import { ForgetPassword, User, UserLogIn, UserSignUp } from "../../components/templates/user.tsx";
-import { generic_get, generic_post, ResponseSchema } from "./requests.tsx";
+import { generic_get, generic_post, generic_post_no_body, ResponseSchema } from "./requests.tsx";
 
 
 export const sign_in = async (body: UserLogIn): Promise<Response> => {
    return await generic_post(body, `/auth/login`, 'POST');
 };
+
+export const logout = async (): Promise<Response> => {
+   return await generic_post_no_body(`/auth/logout`, 'POST');
+};
+
 
 export const sign_up = async (body: UserSignUp): Promise<Response> => {
    return await generic_post(body, `/users/create-user`, 'POST');

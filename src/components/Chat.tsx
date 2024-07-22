@@ -3,6 +3,8 @@ import '../common/assets/css/chat.css';
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from './protectedRoutes/ProtectedSignIn.tsx';
 import { Message } from './templates/user.tsx';
+import { logout } from '../common/api/user.tsx';
+import { formatDateTime } from './utils/helperFunctions.tsx';
 
 const parseMessage = (data: any): Message => {
   
@@ -18,51 +20,61 @@ const parseMessage = (data: any): Message => {
   };
 
 export const Chat = () => {
-    const navigate = useNavigate();
-
+  const navigate = useNavigate();
   const context = useContext(UserContext);
-  
   const [clientId, setClientId] = useState(context?.user?.id);
-
+  const url = `ws://${process.env.REACT_APP_CHAT_BACKEND_HOST}:${process.env.REACT_APP_CHAT_BACKEND_PORT}/ws/${clientId}`;
+  
   const [websckt, setWebsckt] = useState<WebSocket | null>(null);
-  const [message, setMessage] = useState([]);
+
   const [messages, setMessages] = useState<Message[]>([]);
 
 
   useEffect(() => {
-    const url = `ws://${process.env.REACT_APP_CHAT_BACKEND_HOST}:${process.env.REACT_APP_CHAT_BACKEND_PORT}/ws/${clientId}`;
+    if (!clientId) return;
     const ws = new WebSocket(url);
-
+    setWebsckt(ws);
     ws.onopen = (event) => {
       console.log('websocket connected');
     };
 
-    // recieve message every start page
     ws.onmessage = (e) => {
       const receivedData = JSON.parse(JSON.parse(e.data));
       const message = parseMessage(receivedData);
-      setMessages([...messages, message]);
-   
+      setMessages((prevMessages) => [...prevMessages, message]);
+    };
+    
+    ws.onerror = (error) => {
+      console.error('WebSocket error:', error);
     };
 
-    setWebsckt(ws);
-    //clean up function when we close page
-    // return () => ws.close();
+    ws.onclose = (event) => {
+      console.log('WebSocket closed:', event);
+    };
 
   }, [clientId]);
 
 
   const sendMessage = () => {
     if (websckt) { 
-    websckt.send("message");
-      websckt.onmessage = (e) => {
-      const receivedData = JSON.parse(JSON.parse(e.data));
-      const message = parseMessage(receivedData);
-      setMessages([...messages, message]);
-    };
-    setMessage([]);
+      let new_msg = (document.getElementById('new_message') as HTMLInputElement);
+      if (new_msg.value !== '') { 
+        websckt.send(new_msg.value);
+        new_msg.value = '';
+      }
     }
+  };
 
+
+  const user_logout = (): any => {
+  logout().then((response) => {
+  if (response.status === 200) {
+  navigate('/');
+
+  } else {
+  console.error(response);
+  }
+  });
   };
 
 
@@ -77,22 +89,26 @@ export const Chat = () => {
         <div className="nav-elements">
         <ul>
         <li>
-        <button>LOGOUT</button>
+        <button className="logout_btn" onClick={user_logout}>LOGOUT</button>
         </li>
         </ul>
         </div>
         </div>
        </nav>
+       
+
            
     <div className="main-container">
       <div className="chat-container">
         <div className="chat">
-          {messages.map((value, index) => {
+             {messages.map((value, index) => {
+            const { date, time } = formatDateTime(value.created_at);
             if (value.id === clientId) {
               return (
                 <div key={index} className="my-message-container">
                 <div className="my-message">
-                  <p className="client">client id : {value.id}</p>
+                    <p className="client">User: {`${value.first_name} ${value.last_name}`}</p>
+                    <p className="client">Timestamp: {date} {time}</p>
                   <p className="message">{value.content}</p>
                 </div>
               </div>
@@ -101,7 +117,8 @@ export const Chat = () => {
               return (
                 <div key={index} className="another-message-container">
                   <div className="another-message">
-                    <p className="client">client id : {clientId}</p>
+                    <p className="client">User: {`${value.first_name} ${value.last_name}`}</p>
+                    <p className="client">Timestamp: {date} {time}</p>
                     <p className="message">{value.content}</p>
                   </div>
                 </div>
@@ -110,7 +127,8 @@ export const Chat = () => {
           })}
         </div>
         <div className="input-chat-container">
-        <input
+             <input
+               id='new_message'
             className="input-chat"
             type="text"
             placeholder="Chat message ..."
