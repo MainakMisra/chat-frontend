@@ -7,7 +7,6 @@ import { logout } from '../common/api/user.tsx';
 import { formatDateTime } from './utils/helperFunctions.tsx';
 
 const parseMessage = (data: any): Message => {
-  
     return {
       id: data.id,
       first_name: data.first_name,
@@ -41,7 +40,14 @@ export const Chat = () => {
     ws.onmessage = (e) => {
       const receivedData = JSON.parse(JSON.parse(e.data));
       const message = parseMessage(receivedData);
-      setMessages((prevMessages) => [...prevMessages, message]);
+    
+      setMessages((prevMessages) => {
+        const messageExists = prevMessages.some((msg) => msg.message_id === message.message_id);
+        if (!messageExists) {
+          return [...prevMessages, message];
+        }
+        return prevMessages;
+      });
     };
     
     ws.onerror = (error) => {
@@ -109,7 +115,7 @@ export const Chat = () => {
                 <div className="my-message">
                     <p className="client">User: {`${value.first_name} ${value.last_name}`}</p>
                     <p className="client">Timestamp: {date} {time}</p>
-                  <p className="message">{value.content}</p>
+                  <p className="message msg1">{value.content}</p>
                 </div>
               </div>
               );
@@ -119,7 +125,7 @@ export const Chat = () => {
                   <div className="another-message">
                     <p className="client">User: {`${value.first_name} ${value.last_name}`}</p>
                     <p className="client">Timestamp: {date} {time}</p>
-                    <p className="message">{value.content}</p>
+                    <p className="message msg2">{value.content}</p>
                   </div>
                 </div>
               );

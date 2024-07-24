@@ -1,5 +1,5 @@
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 
 import { Outlet, useNavigate } from 'react-router';
 import React from 'react';
@@ -29,7 +29,6 @@ const ProtectedSignIn = () => {
 
    useEffect(() => {
       if (isSuccess) {
-         console.log(data.data);
          if (data.data === undefined) {
             SetIsMeSuccess(false);
             navigate('/');
